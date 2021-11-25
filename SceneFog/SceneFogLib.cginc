@@ -11,12 +11,24 @@ float4 _FogNoiseTilingOffset;
 
 float _SceneFogOn;
 float _SceneHeightFogOn;
+float _CameraFadeDist;
 
 float4 CalcFogFactor(float3 worldPos){
     float3 worldUV = (worldPos - _SceneMin)/(_SceneMax - _SceneMin);
     float4 fogMap = tex2Dlod(_SceneFogMap,float4(worldUV.xz,0,0));
     float fogRate = lerp(2,0.6,worldUV.y * _SceneHeightFogOn) * fogMap.y;
-    return float4(worldUV,saturate(fogRate));
+    float4 sceneFogFactor = float4(worldUV,saturate(fogRate));
+    // // -------- sphere fog
+    // float3 viewDir = (_WorldSpaceCameraPos.xyz - worldPos);
+    // float viewDist = length(viewDir);
+
+    // // --------- vertical linear fog
+    float viewDist = (_WorldSpaceCameraPos.y - worldPos.y);
+
+    float viewFade = lerp(0.1,1,viewDist / max(0.001,_CameraFadeDist));
+    sceneFogFactor.w *= saturate(viewFade);
+
+    return sceneFogFactor;
 }
 
 float4 CalcFogColor(float3 worldUV){
@@ -44,7 +56,8 @@ float4 CalcFogColor(float3 worldUV){
     }
 #define UNITY_APPLY_FOG(coord,col) \
     if(_SceneFogOn){\
-        col = lerp(col,CalcFogColor(coord.xyz),coord.w);\
+        float4 fogColor = CalcFogColor(coord.xyz);\
+        col = lerp(col,fogColor,saturate(coord.w + fogColor.x));\
     }
 
 #endif //SCENE_FOG_LIB_CGINC

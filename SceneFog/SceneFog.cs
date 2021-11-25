@@ -33,6 +33,8 @@ public class SceneFog : MonoBehaviour
     public bool sceneHeightFogOn = false;
     public bool sceneFogOn = true;
 
+    public float _CameraFadeDist = 10;
+
     public void UpdateParams()
     {
         Shader.SetGlobalTexture("_SceneFogMap",sceneFogMap);
@@ -45,5 +47,7 @@ public class SceneFog : MonoBehaviour
 
         Shader.SetGlobalFloat("_SceneFogOn",sceneFogOn?1:0);
         Shader.SetGlobalFloat("_SceneHeightFogOn",sceneHeightFogOn?1:0);
+
+        Shader.SetGlobalFloat("_CameraFadeDist",_CameraFadeDist);
     }
 }
