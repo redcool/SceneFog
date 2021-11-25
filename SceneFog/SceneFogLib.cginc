@@ -14,9 +14,9 @@ float _SceneHeightFogOn;
 float _CameraFadeDist;
 
 float4 CalcFogFactor(float3 worldPos){
-    float3 worldUV = (worldPos - _SceneMin)/(_SceneMax - _SceneMin);
+    float3 worldUV = (worldPos - _SceneMin)/max(0.0001,_SceneMax - _SceneMin);
     float4 fogMap = tex2Dlod(_SceneFogMap,float4(worldUV.xz,0,0));
-    float fogRate = lerp(2,0.6,worldUV.y * _SceneHeightFogOn) * fogMap.y;
+    float fogRate = lerp(1,0.6,worldUV.y * _SceneHeightFogOn) * fogMap.y;
     float4 sceneFogFactor = float4(worldUV,saturate(fogRate));
     // // -------- sphere fog
     // float3 viewDir = (_WorldSpaceCameraPos.xyz - worldPos);
