@@ -55,6 +55,12 @@ Shader "Unlit/TestSceneFog"
                 fixed4 col = tex2D(_MainTex, i.uv);
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
+                half edge = i.fogCoord.w;
+                // return edge;
+                // edge *=( 1-i.fogCoord.w-0.5) *10;
+//                 half4 fogColor = CalcFogColor(i.fogCoord.xyz);
+// return saturate(smoothstep(0.2,0.5,fogColor.x) * edge *10);
+                // return fogColor.x * 1;
                 return col;
             }
             ENDCG
