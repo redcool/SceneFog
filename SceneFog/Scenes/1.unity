@@ -1123,8 +1123,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneFogMap: {fileID: 2800000, guid: 305f04c7ccad6fc47ad95cd328c69f39, type: 3}
   sceneMainNoiseMap: {fileID: 2800000, guid: 770236be1c1a4b84190b5d05986be300, type: 3}
-  sceneDetailNoiseMap: {fileID: 2800000, guid: 924b49fe1491e044c950ae680c2eb443, type: 3}
-  fogNoiseTilingOffset: {x: 1, y: 1, z: 0.2, w: 0}
+  sceneDetailNoiseMap: {fileID: 2800000, guid: 0267ab071e41ee44da5d66227ff388e8, type: 3}
+  mainFogNoiseTilingOffset: {x: 3, y: 3, z: 1, w: -0.07}
+  detailFogTiling: {x: 5, y: 5, z: 5, w: 5}
+  detailFogOffset: {x: -1, y: 0, z: 1, w: 0}
   sceneBoundsUseTransforms: 1
   sceneMinTr: {fileID: 1498587968}
   sceneMaxTr: {fileID: 2106808940}
@@ -1132,7 +1134,7 @@ MonoBehaviour:
   sceneMax: {x: 8.46, y: 1, z: 10.16}
   sceneFogOn: 1
   sceneHeightFogOn: 1
-  heightFogFading: 1
+  heightFogFading: 1.161
   _CameraFadeDist: 1
 --- !u!4 &995925855
 Transform:
@@ -2368,7 +2370,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1919286412}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.25, y: 0, z: 0.25}
+  m_LocalPosition: {x: -0.56, y: 0, z: -1.74}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1301438759}
@@ -2816,7 +2818,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2041658944}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &2106808939
 GameObject:
   m_ObjectHideFlags: 0

@@ -54,6 +54,7 @@ Shader "Unlit/TestSceneFog"
                 // sample the texture
                 fixed4 col = tex2D(_MainTex, i.uv);
                 // apply fog
+                UNITY_TRANSFER_FOG(i,o.posWorld);
                 UNITY_APPLY_FOG(i.fogCoord, col);
                 half edge = i.fogCoord.w;
                 // return edge;

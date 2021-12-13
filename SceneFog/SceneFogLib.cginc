@@ -5,6 +5,10 @@
 
 sampler2D _SceneFogMap;
 sampler2D _FogMainNoiseMap,_FogDetailNoiseMap;
+sampler2D _HighlightTex;
+
+half4 _HighlightColor;
+
 half3 _SceneMin;
 half3 _SceneMax;
 half4 _FogNoiseTilingOffset;
@@ -35,6 +39,13 @@ half4 CalcFogFactor(half3 worldPos){
     return sceneFogFactor;
 }
 
+half4 CaclHighLight(half3 worldPos){
+        // high light
+    float4 highlightTex = tex2D(_HighlightTex,worldPos.xz);
+    float highlight = abs(sin(_Time.y)) * highlightTex.x;
+    return highlight * _HighlightColor;
+}
+
 half4 CalcFogColor(half3 worldUV){
     half4 noiseUV = worldUV.xzxz * _DetailFogTiling + _DetailFogOffset * _Time.xxxx;
     half2 noise = tex2D(_FogDetailNoiseMap,noiseUV.xy);
@@ -47,8 +58,9 @@ half4 CalcFogColor(half3 worldUV){
     // mainNoiseUV += (worldUV.xy+worldUV.yz)*0.5;
     // mainNoiseUV *= 0.3;
     half4 noiseMap = tex2D(_FogMainNoiseMap,mainNoiseUV + noise *0.05);
+    half4 highlightColor = CaclHighLight(worldUV);
 
-    return noiseMap * unity_FogColor;
+    return noiseMap * unity_FogColor + highlightColor;
 }
 
 #define UNITY_FOG_COORDS(idx) half4 fogCoord:TEXCOORD##idx;
