@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 #if UNITY_EDITOR
@@ -38,6 +37,8 @@ public class SceneFog : MonoBehaviour
     public Transform sceneMinTr,sceneMaxTr;
     public Vector3 sceneMin = new Vector3(-200,-10,-200);
     public Vector3 sceneMax = new Vector3(200,10,200);
+    [Header("Fog Area(min,max)")]
+    public Vector2 fogAreaScale = new Vector2(0,1);
     [Header("Scene Fog")]
     public bool sceneFogOn = true;
     [Header("Height Fog")]
@@ -69,6 +70,7 @@ public class SceneFog : MonoBehaviour
         Shader.SetGlobalFloat("_SceneHeightFogFading", heightFogFading);
 
         Shader.SetGlobalFloat("_CameraFadeDist", _CameraFadeDist);
+        Shader.SetGlobalVector("_FogAreaScale",fogAreaScale);
     }
 
     

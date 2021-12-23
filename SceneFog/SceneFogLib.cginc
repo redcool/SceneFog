@@ -19,11 +19,14 @@ half _SceneHeightFogOn;
 half _SceneHeightFogFading;
 
 half _CameraFadeDist;
+half2 _FogAreaScale;
 
 half4 CalcFogFactor(half3 worldPos){
     half3 worldUV = saturate((worldPos - _SceneMin)/max(0.0001,_SceneMax - _SceneMin));
+
     half4 fogMap = tex2Dlod(_SceneFogMap,half4(worldUV.xz,0,0));
-    half fogAtten = fogMap.y ;
+    half fogAtten = smoothstep(_FogAreaScale.x,_FogAreaScale.y,fogMap.y);
+
     half fogRate = lerp( _SceneHeightFogFading , 0.6 ,worldUV.y * _SceneHeightFogOn) * fogAtten;
     half4 sceneFogFactor = half4(worldUV,saturate(fogRate));
     // // -------- sphere fog
