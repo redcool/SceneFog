@@ -41,6 +41,7 @@ public class SceneFog : MonoBehaviour
     public Vector2 fogAreaScale = new Vector2(0,1);
     [Header("Scene Fog")]
     public bool sceneFogOn = true;
+    public Color sceneFogColor = Color.white;
     [Header("Height Fog")]
     public bool sceneHeightFogOn = false;
     [Range(1,2)]public float heightFogFading = 1;
@@ -66,6 +67,7 @@ public class SceneFog : MonoBehaviour
         Shader.SetGlobalVector("_DetailFogTiling", detailFogTiling);
 
         Shader.SetGlobalFloat("_SceneFogOn", sceneFogOn ? 1 : 0);
+        Shader.SetGlobalColor("_SceneFogColor",sceneFogColor);
         Shader.SetGlobalFloat("_SceneHeightFogOn", sceneHeightFogOn ? 1 : 0);
         Shader.SetGlobalFloat("_SceneHeightFogFading", heightFogFading);
 

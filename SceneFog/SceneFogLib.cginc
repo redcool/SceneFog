@@ -20,6 +20,7 @@ half _SceneHeightFogFading;
 
 half _CameraFadeDist;
 half2 _FogAreaScale;
+half4 _SceneFogColor;
 
 half4 CalcFogFactor(half3 worldPos){
     half3 worldUV = saturate((worldPos - _SceneMin)/max(0.0001,_SceneMax - _SceneMin));
@@ -34,7 +35,7 @@ half4 CalcFogFactor(half3 worldPos){
     // half viewDist = length(viewDir);
 
     // // --------- vertical linear fog
-    half viewDist = (_WorldSpaceCameraPos.y - worldPos.y);
+    half viewDist = abs(_WorldSpaceCameraPos.y - worldPos.y);
 
     half viewFade = lerp(0.1,1,viewDist / max(0.001,_CameraFadeDist));
     sceneFogFactor.w *= saturate(viewFade);
@@ -60,10 +61,12 @@ half4 CalcFogColor(half3 worldUV){
     half2 mainNoiseUV = worldUV.xz* _FogNoiseTilingOffset.xy + mainOffset;
     // mainNoiseUV += (worldUV.xy+worldUV.yz)*0.5;
     // mainNoiseUV *= 0.3;
+    // noise = smoothstep(0.5,0.9,noise);
     half4 noiseMap = tex2D(_FogMainNoiseMap,mainNoiseUV + noise *0.05);
-    half4 highlightColor = CaclHighLight(worldUV);
 
-    return noiseMap * unity_FogColor + highlightColor;
+    half4 highlightColor = CaclHighLight(worldUV);
+    return noiseMap * _SceneFogColor + highlightColor;
+    // return noiseMap * unity_FogColor + highlightColor;
 }
 
 #define UNITY_FOG_COORDS(idx) half4 fogCoord:TEXCOORD##idx;
